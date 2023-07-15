@@ -69,6 +69,54 @@ def run():
                 st.header("**Resume Analysis**")
                 st.success("Hello " + resume_data['name'])
                 st.subheader("**Your Basic Info**")
+                try:
+                    st.text('Name: '+resume_data['name'])
+                    st.text('Email: '+resume_data['email'])
+                    st.text('Contact: '+resume_data['mobile_number'])
+                    st.text('Resume pages: '+str(resume_data['no_of_pages']))
+                except:
+                    pass
+                    cand_level = ''
+                    if resume_data['no_of_pages'] == 1:
+                        cand_level = 'Fresher'
+                        st.markdown('''<h4 style='text-align: left; color: #d73b5c;'>You are looking Fresher.</h4>''',
+                                unsafe_allow_html=True)
+                    elif resume_data['no_of_pages'] == 2:
+                        cand_level = "Intermediate"
+                        st.markdown('''<h4 style='text-align: left; color: #1ed760;'>You are at intermediate level!</h4>''',
+                                    unsafe_allow_html=True)
+                    elif resume_data['no_of_pages'] >= 3:
+                        cand_level = "Experienced"
+                        st.markdown('''<h4 style='text-align: left; color: #fba171;'>You are at experience level!''',
+                                    unsafe_allow_html=True)
+                    
+                    st.subheader("**Skills Recommendation**")
+                    keywords = st_tags(label='### Skills that you have',
+                                       text='See our skills recommendation',
+                                       value=resume_data['skills'], key = '1')
+                    
+                    ds_keyword = ['tensorflow', 'keras', 'pytorch', 'machine learning', 'deep Learning', 'flask',
+                              'streamlit']
+                    web_keyword = ['react', 'django', 'node jS', 'react js', 'php', 'laravel', 'magento', 'wordpress',
+                                'javascript', 'angular js', 'c#', 'flask']
+                    android_keyword = ['android', 'android development', 'flutter', 'kotlin', 'xml', 'kivy']
+                    ios_keyword = ['ios', 'ios development', 'swift', 'cocoa', 'cocoa touch', 'xcode']
+                    uiux_keyword = ['ux', 'adobe xd', 'figma', 'zeplin', 'balsamiq', 'ui', 'prototyping', 'wireframes',
+                                    'storyframes', 'adobe photoshop', 'photoshop', 'editing', 'adobe illustrator',
+                                    'illustrator', 'adobe after effects', 'after effects', 'adobe premier pro',
+                                    'premier pro', 'adobe indesign', 'indesign', 'wireframe', 'solid', 'grasp',
+                                    'user research', 'user experience']
+
+                    recommended_skills = []
+                    reco_field = ''
+                    rec_course = ''
+                    for i in resume_data['skills']:
+                        if i.lower() in ds_keyword:
+                            print(i.lower())
+                            reco_field = 'Data Science'
+                            st.success("** Out analysis says you are looking for Data Science")
+
+                         
 
 def show_pdf(file_path):
     with open(file_path, "rb") as f:
@@ -92,3 +140,4 @@ def pdf_reader(file):
     converter.close()
     fake_file_handle.close()
     return text
+
